@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rate my Aayush</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink-bg-1: #ffd6e8;
+    --pink-bg-2: #ffe9f2;
+    --pink-card: #fff5fa;
+    --pink-primary: #ff6fa5;
+    --pink-primary-dark: #e8508c;
+    --pink-deep: #d6336c;
+    --pink-pale: #ffc2dd;
+    --pink-line: #ffb8d9;
+    --text-plum: #6b2545;
+    --text-soft: #9c5776;
+    --shadow: 0 8px 24px rgba(214, 51, 108, 0.15);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(180deg, var(--pink-bg-1) 0%, var(--pink-bg-2) 45%, #fff 100%);
+    color: var(--text-plum);
+    min-height: 100vh;
+    padding: 24px 16px 80px;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  .cloud {
+    position: fixed;
+    background: #fff;
+    opacity: 0.6;
+    border-radius: 50%;
+    filter: blur(1px);
+    z-index: 0;
+  }
+
+  .wrap {
+    max-width: 620px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  header { text-align: center; margin-bottom: 8px; }
+
+  h1 {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 7vw, 2.8rem);
+    color: var(--pink-deep);
+    margin: 4px 0 0;
+    letter-spacing: -0.5px;
+  }
+
+  .subtitle {
+    font-size: 1.05rem;
+    color: var(--text-soft);
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  .mascot-wrap { display: flex; justify-content: center; margin-bottom: -10px; }
+  #mascot { width: 150px; height: 150px; cursor: pointer; }
+  .ear { transform-origin: center; transition: transform 0.3s ease; }
+  .mascot-wrap:hover .ear-l { transform: rotate(-8deg); }
+  .mascot-wrap:hover .ear-r { transform: rotate(8deg); }
+
+  .card {
+    background: var(--pink-card);
+    border: 2px solid var(--pink-line);
+    border-radius: 28px;
+    padding: 26px 24px;
+    margin-top: 22px;
+    box-shadow: var(--shadow);
+  }
+
+  .question { margin-bottom: 22px; }
+
+  .question label {
+    display: block;
+    font-weight: 700;
+    font-size: 1.02rem;
+    margin-bottom: 8px;
+    color: var(--pink-deep);
+  }
+
+  .qnum {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--pink-primary);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-right: 8px;
+    font-family: 'Fredoka', sans-serif;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 70px;
+    border: 1.5px solid var(--pink-pale);
+    border-radius: 16px;
+    padding: 12px 14px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.98rem;
+    color: var(--text-plum);
+    resize: vertical;
+    background: #fff;
+    transition: border-color 0.2s;
+  }
+
+  textarea:focus { outline: none; border-color: var(--pink-primary); }
+
+  .heart-meter { display: flex; align-items: center; gap: 14px; }
+  .heart-visual { width: 54px; height: 48px; position: relative; flex-shrink: 0; }
+  .heart-visual svg { width: 100%; height: 100%; }
+
+  #love-label {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    color: var(--pink-deep);
+    font-size: 0.95rem;
+    min-width: 90px;
+  }
+
+  input[type=range] {
+    flex: 1;
+    -webkit-appearance: none;
+    height: 8px;
+    border-radius: 6px;
+    background: var(--pink-pale);
+    outline: none;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--pink-primary);
+    border: 3px solid #fff;
+    box-shadow: 0 2px 6px rgba(214,51,108,0.4);
+    cursor: pointer;
+  }
+
+  input[type=range]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--pink-primary);
+    border: 3px solid #fff;
+    box-shadow: 0 2px 6px rgba(214,51,108,0.4);
+    cursor: pointer;
+  }
+
+  .week-rating-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+
+  #week-num {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--pink-deep);
+    min-width: 46px;
+    text-align: center;
+    background: #fff;
+    border-radius: 12px;
+    padding: 4px 0;
+    border: 1.5px solid var(--pink-pale);
+  }
+
+  .photo-section-title {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    color: var(--pink-deep);
+    font-size: 1.02rem;
+    margin: 4px 0 12px;
+  }
+
+  .photo-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .photo-box {
+    width: 100px;
+    height: 100px;
+    border-radius: 18px;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(214,51,108,0.18);
+  }
+
+  .photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .submit-btn {
+    display: block;
+    width: 100%;
+    margin-top: 26px;
+    padding: 15px;
+    border: none;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--pink-primary), var(--pink-primary-dark));
+    color: #fff;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(214,51,108,0.35);
+    transition: transform 0.15s;
+  }
+
+  .submit-btn:hover { transform: translateY(-2px); }
+  .submit-btn:active { transform: translateY(0); }
+
+  .history-toggle {
+    text-align: center;
+    margin-top: 26px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    color: var(--pink-deep);
+    cursor: pointer;
+    font-size: 0.95rem;
+    user-select: none;
+  }
+
+  .history-list { display: none; margin-top: 14px; }
+  .history-list.open { display: block; }
+
+  .history-entry {
+    background: #fff;
+    border: 1.5px solid var(--pink-pale);
+    border-radius: 18px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    cursor: pointer;
+  }
+
+  .history-entry .h-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    color: var(--pink-deep);
+  }
+
+  .history-entry .h-detail {
+    display: none;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--text-plum);
+    line-height: 1.5;
+  }
+
+  .history-entry.open .h-detail { display: block; }
+  .history-entry .h-detail b { color: var(--pink-deep); }
+
+  .empty-history {
+    text-align: center;
+    color: var(--text-soft);
+    font-size: 0.9rem;
+    margin-top: 10px;
+  }
+
+  .clear-history {
+    display: block;
+    margin: 16px auto 0;
+    background: none;
+    border: none;
+    color: var(--text-soft);
+    font-size: 0.78rem;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 214, 232, 0.97);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    z-index: 10;
+    padding: 24px;
+  }
+
+  .overlay.show { display: flex; }
+
+  .overlay h2 {
+    font-family: 'Fredoka', sans-serif;
+    color: var(--pink-deep);
+    font-size: 1.8rem;
+    margin-top: 20px;
+  }
+
+  .overlay p { color: var(--text-soft); font-size: 1rem; max-width: 320px; }
+
+  .overlay button {
+    margin-top: 18px;
+    padding: 12px 26px;
+    border: none;
+    border-radius: 18px;
+    background: var(--pink-primary);
+    color: #fff;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="mascot-wrap">
+    <svg id="mascot" viewBox="0 0 200 200">
+      <ellipse class="ear ear-l" cx="45" cy="95" rx="32" ry="38" fill="#ffc2dd"/>
+      <ellipse class="ear ear-r" cx="155" cy="95" rx="32" ry="38" fill="#ffc2dd"/>
+      <ellipse cx="100" cy="105" rx="62" ry="56" fill="#ff9dc4"/>
+      <circle cx="72" cy="125" r="12" fill="#ff6fa5" opacity="0.6"/>
+      <circle cx="128" cy="125" r="12" fill="#ff6fa5" opacity="0.6"/>
+      <circle cx="80" cy="95" r="6" fill="#6b2545"/>
+      <circle cx="120" cy="95" r="6" fill="#6b2545"/>
+      <path d="M95 130 Q100 145 95 158 Q90 165 98 168" stroke="#ff6fa5" stroke-width="10" fill="none" stroke-linecap="round"/>
+      <path id="mouth-happy" d="M85 138 Q100 152 115 138" stroke="#6b2545" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path id="mouth-neutral" d="M85 140 Q100 143 115 140" stroke="#6b2545" stroke-width="3.5" fill="none" stroke-linecap="round" style="display:none"/>
+      <path id="mouth-sad" d="M85 145 Q100 133 115 145" stroke="#6b2545" stroke-width="3.5" fill="none" stroke-linecap="round" style="display:none"/>
+      <path d="M60 60 q40 -22 80 0" stroke="#fff" stroke-width="4" fill="none" opacity="0.35" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <header>
+    <h1>Rate my Aayush 🩷</h1>
+    <div class="subtitle">your weekly check-in</div>
+  </header>
+
+  <div class="card">
+    <div class="question">
+      <label><span class="qnum">1</span>What's one moment this week you wish I could've been there for?</label>
+      <textarea id="q1" placeholder="Tell me about it..."></textarea>
+    </div>
+
+    <div class="question">
+      <label><span class="qnum">2</span>Is there anything you want to talk to me about?</label>
+      <textarea id="q2" placeholder="I'm listening..."></textarea>
+    </div>
+
+    <div class="question">
+      <label><span class="qnum">3</span>How are you feeling emotionally? Is there anything on your mind?</label>
+      <textarea id="q3" placeholder="Be honest with me..."></textarea>
+    </div>
+
+    <div class="question">
+      <label><span class="qnum">4</span>What's a moment that made you happy this week?</label>
+      <textarea id="q4" placeholder="A good moment..."></textarea>
+    </div>
+
+    <div class="question">
+      <label><span class="qnum">5</span>How much do you love me?! 🥹</label>
+      <div class="heart-meter">
+        <div class="heart-visual">
+          <svg viewBox="0 0 100 90">
+            <defs>
+              <clipPath id="heartClip">
+                <path d="M50 85 C10 55 0 30 15 15 C28 2 45 8 50 25 C55 8 72 2 85 15 C100 30 90 55 50 85 Z"/>
+              </clipPath>
+            </defs>
+            <path d="M50 85 C10 55 0 30 15 15 C28 2 45 8 50 25 C55 8 72 2 85 15 C100 30 90 55 50 85 Z" fill="#ffd6e8"/>
+            <rect id="heart-fill-rect" x="0" y="90" width="100" height="90" fill="#ff3d77" clip-path="url(#heartClip)"/>
+          </svg>
+        </div>
+        <input type="range" id="love" min="0" max="100" value="80">
+        <div id="love-label">so much 🩷</div>
+      </div>
+    </div>
+
+    <div class="question">
+      <label><span class="qnum">6</span>Rate your week (1–10) & how do you hope to improve next week?</label>
+      <div class="week-rating-row">
+        <input type="range" id="week-rating" min="1" max="10" value="7">
+        <div id="week-num">7</div>
+      </div>
+      <textarea id="improve" placeholder="Next week I want to..."></textarea>
+    </div>
+
+    <div class="photo-section-title">📸 moments from this week</div>
+    <div class="photo-row" id="photo-row">
+      <div class="photo-box"><img src="photo1.jpg" alt="" onerror="this.closest('.photo-box').style.display='none'"></div>
+      <div class="photo-box"><img src="photo2.jpg" alt="" onerror="this.closest('.photo-box').style.display='none'"></div>
+      <div class="photo-box"><img src="photo3.jpg" alt="" onerror="this.closest('.photo-box').style.display='none'"></div>
+    </div>
+
+    <button class="submit-btn" id="submit-btn">Send to Aayush 💌</button>
+  </div>
+
+  <div class="history-toggle" id="history-toggle">🩷 Past check-ins</div>
+  <div class="history-list" id="history-list"></div>
+  <button class="clear-history" id="clear-history">clear my past answers</button>
+</div>
+
+<div class="overlay" id="overlay">
+  <svg width="120" height="120" viewBox="0 0 200 200">
+    <ellipse cx="45" cy="95" rx="32" ry="38" fill="#ffc2dd"/>
+    <ellipse cx="155" cy="95" rx="32" ry="38" fill="#ffc2dd"/>
+    <ellipse cx="100" cy="105" rx="62" ry="56" fill="#ff9dc4"/>
+    <circle cx="72" cy="120" r="14" fill="#ff6fa5" opacity="0.7"/>
+    <circle cx="128" cy="120" r="14" fill="#ff6fa5" opacity="0.7"/>
+    <path d="M80 92 Q84 86 88 92" stroke="#6b2545" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M112 92 Q116 86 120 92" stroke="#6b2545" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M95 130 Q100 145 95 158 Q90 165 98 168" stroke="#ff6fa5" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <path d="M85 138 Q100 152 115 138" stroke="#6b2545" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  </svg>
+  <h2>Sent with love 🩷</h2>
+  <p>Your check-in is on its way to Aayush. He can't wait to read it 🩷</p>
+  <button id="overlay-close">Close</button>
+</div>
+
+<script>
+  const AAYUSH_EMAIL = 'aayushnepal2021@gmail.com';
+
+  // ---------- floating clouds ----------
+  for (let i = 0; i < 5; i++) {
+    const c = document.createElement('div');
+    c.className = 'cloud';
+    const size = 60 + Math.random() * 100;
+    c.style.width = size + 'px';
+    c.style.height = size * 0.6 + 'px';
+    c.style.left = Math.random() * 90 + 'vw';
+    c.style.top = Math.random() * 80 + 'vh';
+    document.body.appendChild(c);
+  }
+
+  // ---------- love heart meter ----------
+  const loveSlider = document.getElementById('love');
+  const heartFillRect = document.getElementById('heart-fill-rect');
+  const loveLabel = document.getElementById('love-label');
+  function updateHeart() {
+    const v = parseInt(loveSlider.value, 10);
+    const y = 90 - (v / 100) * 90;
+    heartFillRect.setAttribute('y', y);
+    let label = 'a little 🩷';
+    if (v >= 95) label = 'infinitely 🩷';
+    else if (v >= 75) label = 'so much 🩷';
+    else if (v >= 45) label = 'a lot 🩷';
+    else if (v >= 20) label = 'kinda 🩷';
+    loveLabel.textContent = label;
+  }
+  loveSlider.addEventListener('input', updateHeart);
+  updateHeart();
+
+  // ---------- week rating -> mascot mood ----------
+  const weekSlider = document.getElementById('week-rating');
+  const weekNum = document.getElementById('week-num');
+  const mouths = {
+    happy: document.getElementById('mouth-happy'),
+    neutral: document.getElementById('mouth-neutral'),
+    sad: document.getElementById('mouth-sad')
+  };
+  function updateMood() {
+    const v = parseInt(weekSlider.value, 10);
+    weekNum.textContent = v;
+    mouths.happy.style.display = 'none';
+    mouths.neutral.style.display = 'none';
+    mouths.sad.style.display = 'none';
+    if (v >= 7) mouths.happy.style.display = 'block';
+    else if (v >= 4) mouths.neutral.style.display = 'block';
+    else mouths.sad.style.display = 'block';
+  }
+  weekSlider.addEventListener('input', updateMood);
+  updateMood();
+
+  // ---------- history (localStorage) ----------
+  const HISTORY_KEY = 'rateMyAayush_history';
+
+  function getHistory() {
+    try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; }
+    catch (e) { return []; }
+  }
+
+  function saveHistory(list) {
+    try { localStorage.setItem(HISTORY_KEY, JSON.stringify(list)); }
+    catch (e) { console.error('Could not save history:', e); }
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  function renderHistory() {
+    const list = getHistory();
+    const container = document.getElementById('history-list');
+    container.innerHTML = '';
+    if (list.length === 0) {
+      container.innerHTML = '<div class="empty-history">No check-ins saved yet.</div>';
+      return;
+    }
+    list.slice().reverse().forEach((entry) => {
+      const div = document.createElement('div');
+      div.className = 'history-entry';
+      div.innerHTML = `
+        <div class="h-top"><span>${entry.date}</span><span>${entry.weekRating}/10 · loved ${entry.love}%</span></div>
+        <div class="h-detail">
+          <b>Wish you were there:</b> ${escapeHtml(entry.q1) || '—'}<br><br>
+          <b>Wanted to talk about:</b> ${escapeHtml(entry.q2) || '—'}<br><br>
+          <b>Feeling:</b> ${escapeHtml(entry.q3) || '—'}<br><br>
+          <b>Happy moment:</b> ${escapeHtml(entry.q4) || '—'}<br><br>
+          <b>Improve next week:</b> ${escapeHtml(entry.improve) || '—'}
+        </div>
+      `;
+      div.addEventListener('click', () => div.classList.toggle('open'));
+      container.appendChild(div);
+    });
+  }
+
+  document.getElementById('history-toggle').addEventListener('click', () => {
+    const list = document.getElementById('history-list');
+    list.classList.toggle('open');
+    if (list.classList.contains('open')) renderHistory();
+  });
+
+  document.getElementById('clear-history').addEventListener('click', () => {
+    if (confirm('Clear all your saved check-ins? This cannot be undone.')) {
+      localStorage.removeItem(HISTORY_KEY);
+      renderHistory();
+    }
+  });
+
+  // ---------- submit ----------
+  async function imgToFile(imgEl, filename) {
+    try {
+      const res = await fetch(imgEl.src);
+      const blob = await res.blob();
+      return new File([blob], filename, { type: blob.type || 'image/jpeg' });
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function downloadFile(file) {
+    const url = URL.createObjectURL(file);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = file.name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+
+  document.getElementById('submit-btn').addEventListener('click', async () => {
+    const q1 = document.getElementById('q1').value.trim();
+    const q2 = document.getElementById('q2').value.trim();
+    const q3 = document.getElementById('q3').value.trim();
+    const q4 = document.getElementById('q4').value.trim();
+    const love = loveSlider.value;
+    const weekRating = weekSlider.value;
+    const improve = document.getElementById('improve').value.trim();
+
+    const entry = {
+      date: new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }),
+      q1, q2, q3, q4, love, weekRating, improve
+    };
+
+    const history = getHistory();
+    history.push(entry);
+    saveHistory(history);
+    renderHistory();
+
+    const visiblePhotoEls = Array.from(document.querySelectorAll('.photo-box')).filter(box => box.style.display !== 'none').map(box => box.querySelector('img'));
+    const hasPhotos = visiblePhotoEls.length > 0;
+
+    const bodyLines = [
+      `Rate my Aayush — ${entry.date}`,
+      '',
+      `1) One moment you wish I could've been there for:`,
+      q1 || '(no answer)',
+      '',
+      `2) Something to talk about:`,
+      q2 || '(no answer)',
+      '',
+      `3) How you're feeling emotionally:`,
+      q3 || '(no answer)',
+      '',
+      `4) A happy moment this week:`,
+      q4 || '(no answer)',
+      '',
+      `5) How much do you love me: ${love}%`,
+      '',
+      `6) Week rating: ${weekRating}/10`,
+      `Improve next week: ${improve || '(no answer)'}`
+    ];
+    const bodyText = bodyLines.join('\n');
+    const subject = `Weekly check-in — ${entry.date}`;
+    const mailto = `mailto:${AAYUSH_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+
+    let files = [];
+    if (hasPhotos) {
+      const conversions = visiblePhotoEls.map((img, i) => imgToFile(img, `moment-${i + 1}.jpg`));
+      files = (await Promise.all(conversions)).filter(Boolean);
+    }
+
+    document.getElementById('overlay').classList.add('show');
+
+    if (files.length > 0 && navigator.canShare && navigator.canShare({ files })) {
+      try {
+        await navigator.share({ title: subject, text: bodyText, files });
+        return;
+      } catch (err) {
+        // fall through to backup below
+      }
+    }
+
+    if (files.length > 0) {
+      files.forEach(downloadFile);
+    }
+    window.location.href = mailto;
+  });
+
+  document.getElementById('overlay-close').addEventListener('click', () => {
+    document.getElementById('overlay').classList.remove('show');
+  });
+
+  renderHistory();
+</script>
+
+</body>
+</html>
