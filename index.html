@@ -43,12 +43,7 @@
     z-index: 0;
   }
 
-  .wrap {
-    max-width: 620px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
+  .wrap { max-width: 620px; margin: 0 auto; position: relative; z-index: 1; }
 
   header { text-align: center; margin-bottom: 8px; }
 
@@ -61,18 +56,19 @@
     letter-spacing: -0.5px;
   }
 
-  .subtitle {
-    font-size: 1.05rem;
-    color: var(--text-soft);
-    margin-top: 4px;
-    font-weight: 600;
-  }
+  .subtitle { font-size: 1.05rem; color: var(--text-soft); margin-top: 4px; font-weight: 600; }
 
-  .mascot-wrap { display: flex; justify-content: center; margin-bottom: -10px; }
-  #mascot { width: 150px; height: 150px; cursor: pointer; }
-  .ear { transform-origin: center; transition: transform 0.3s ease; }
-  .mascot-wrap:hover .ear-l { transform: rotate(-8deg); }
-  .mascot-wrap:hover .ear-r { transform: rotate(8deg); }
+  .mascot-wrap { display: flex; justify-content: center; margin-bottom: 4px; }
+  #mascot-photo {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #fff;
+    box-shadow: 0 8px 22px rgba(214,51,108,0.3);
+    transition: transform 0.3s ease;
+  }
+  .mascot-wrap:hover #mascot-photo { transform: scale(1.04) rotate(-2deg); }
 
   .card {
     background: var(--pink-card);
@@ -189,11 +185,7 @@
     margin: 4px 0 12px;
   }
 
-  .photo-row {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
+  .photo-row { display: flex; gap: 12px; flex-wrap: wrap; }
 
   .photo-box {
     width: 100px;
@@ -202,14 +194,31 @@
     overflow: hidden;
     flex-shrink: 0;
     box-shadow: 0 4px 10px rgba(214,51,108,0.18);
+    position: relative;
+    background: #fff;
+    border: 2px dashed var(--pink-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
   }
 
-  .photo-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+  .photo-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-box .photo-plus { font-size: 1.8rem; color: var(--pink-primary); font-weight: 300; }
+  .photo-box input { display: none; }
+  .photo-box .uploading-label {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: var(--pink-deep);
+    font-weight: 700;
+    text-align: center;
   }
+  .photo-box.uploading .uploading-label { display: flex; }
 
   .submit-btn {
     display: block;
@@ -230,6 +239,7 @@
 
   .submit-btn:hover { transform: translateY(-2px); }
   .submit-btn:active { transform: translateY(0); }
+  .submit-btn:disabled { opacity: 0.6; cursor: default; transform: none; }
 
   .history-toggle {
     text-align: center;
@@ -273,16 +283,12 @@
   .history-entry.open .h-detail { display: block; }
   .history-entry .h-detail b { color: var(--pink-deep); }
 
-  .empty-history {
-    text-align: center;
-    color: var(--text-soft);
-    font-size: 0.9rem;
-    margin-top: 10px;
-  }
+  .empty-history { text-align: center; color: var(--text-soft); font-size: 0.9rem; margin-top: 10px; }
 
-  .clear-history {
+  .logout-link {
     display: block;
-    margin: 16px auto 0;
+    text-align: center;
+    margin: 30px auto 0;
     background: none;
     border: none;
     color: var(--text-soft);
@@ -306,13 +312,7 @@
 
   .overlay.show { display: flex; }
 
-  .overlay h2 {
-    font-family: 'Fredoka', sans-serif;
-    color: var(--pink-deep);
-    font-size: 1.8rem;
-    margin-top: 20px;
-  }
-
+  .overlay h2 { font-family: 'Fredoka', sans-serif; color: var(--pink-deep); font-size: 1.8rem; margin-top: 20px; }
   .overlay p { color: var(--text-soft); font-size: 1rem; max-width: 320px; }
 
   .overlay button {
@@ -328,8 +328,8 @@
     cursor: pointer;
   }
 
-  /* Lock screen */
-  #lock-screen {
+  /* Login screen */
+  #login-screen {
     position: fixed;
     inset: 0;
     background: linear-gradient(180deg, var(--pink-bg-1) 0%, var(--pink-bg-2) 45%, #fff 100%);
@@ -342,38 +342,27 @@
     padding: 24px;
   }
 
-  #lock-screen.hidden { display: none; }
+  #login-screen.hidden { display: none; }
 
-  #lock-screen h2 {
-    font-family: 'Fredoka', sans-serif;
-    color: var(--pink-deep);
-    font-size: 1.6rem;
-    margin: 18px 0 6px;
-  }
+  #login-screen h2 { font-family: 'Fredoka', sans-serif; color: var(--pink-deep); font-size: 1.6rem; margin: 18px 0 6px; }
+  #login-screen p { color: var(--text-soft); font-size: 0.95rem; margin-bottom: 18px; }
 
-  #lock-screen p {
-    color: var(--text-soft);
-    font-size: 0.95rem;
-    margin-bottom: 18px;
-  }
+  #login-form { display: flex; flex-direction: column; gap: 10px; width: 240px; }
 
-  #lock-input {
+  #login-form input {
     border: 2px solid var(--pink-pale);
     border-radius: 16px;
     padding: 12px 16px;
     font-family: 'Quicksand', sans-serif;
-    font-size: 1.1rem;
-    text-align: center;
-    letter-spacing: 4px;
+    font-size: 1rem;
     color: var(--text-plum);
-    width: 200px;
     background: #fff;
   }
 
-  #lock-input:focus { outline: none; border-color: var(--pink-primary); }
+  #login-form input:focus { outline: none; border-color: var(--pink-primary); }
 
-  #lock-submit {
-    margin-top: 14px;
+  #login-submit {
+    margin-top: 6px;
     padding: 12px 28px;
     border: none;
     border-radius: 18px;
@@ -385,12 +374,7 @@
     cursor: pointer;
   }
 
-  #lock-error {
-    color: var(--pink-deep);
-    font-size: 0.85rem;
-    margin-top: 10px;
-    height: 16px;
-  }
+  #login-error { color: var(--pink-deep); font-size: 0.85rem; margin-top: 10px; min-height: 16px; }
 
   #main-content { display: none; }
   #main-content.unlocked { display: block; }
@@ -398,42 +382,22 @@
 </head>
 <body>
 
-<div id="lock-screen">
-  <svg width="110" height="110" viewBox="0 0 200 200">
-    <ellipse cx="45" cy="95" rx="32" ry="38" fill="#ffc2dd"/>
-    <ellipse cx="155" cy="95" rx="32" ry="38" fill="#ffc2dd"/>
-    <ellipse cx="100" cy="105" rx="62" ry="56" fill="#ff9dc4"/>
-    <circle cx="72" cy="125" r="12" fill="#ff6fa5" opacity="0.6"/>
-    <circle cx="128" cy="125" r="12" fill="#ff6fa5" opacity="0.6"/>
-    <circle cx="80" cy="95" r="6" fill="#6b2545"/>
-    <circle cx="120" cy="95" r="6" fill="#6b2545"/>
-    <path d="M85 138 Q100 152 115 138" stroke="#6b2545" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  </svg>
+<div id="login-screen">
+  <img src="mascot.png" alt="us" style="width:110px; height:110px; border-radius:50%; object-fit:cover; border:4px solid #fff; box-shadow: 0 6px 16px rgba(214,51,108,0.3);">
   <h2>Rate my Aayush 🩷</h2>
-  <p>Enter the passcode to continue</p>
-  <input type="password" id="lock-input" inputmode="numeric" maxlength="6" placeholder="••••••">
-  <button id="lock-submit">Unlock</button>
-  <div id="lock-error"></div>
+  <p>Log in to continue</p>
+  <form id="login-form">
+    <input type="email" id="login-email" placeholder="Email" autocomplete="username" required>
+    <input type="password" id="login-password" placeholder="Password" autocomplete="current-password" required>
+    <button type="submit" id="login-submit">Log in</button>
+  </form>
+  <div id="login-error"></div>
 </div>
 
 <div id="main-content">
-
 <div class="wrap">
   <div class="mascot-wrap">
-    <svg id="mascot" viewBox="0 0 200 200">
-      <ellipse class="ear ear-l" cx="45" cy="95" rx="32" ry="38" fill="#ffc2dd"/>
-      <ellipse class="ear ear-r" cx="155" cy="95" rx="32" ry="38" fill="#ffc2dd"/>
-      <ellipse cx="100" cy="105" rx="62" ry="56" fill="#ff9dc4"/>
-      <circle cx="72" cy="125" r="12" fill="#ff6fa5" opacity="0.6"/>
-      <circle cx="128" cy="125" r="12" fill="#ff6fa5" opacity="0.6"/>
-      <circle cx="80" cy="95" r="6" fill="#6b2545"/>
-      <circle cx="120" cy="95" r="6" fill="#6b2545"/>
-      <path d="M95 130 Q100 145 95 158 Q90 165 98 168" stroke="#ff6fa5" stroke-width="10" fill="none" stroke-linecap="round"/>
-      <path id="mouth-happy" d="M85 138 Q100 152 115 138" stroke="#6b2545" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-      <path id="mouth-neutral" d="M85 140 Q100 143 115 140" stroke="#6b2545" stroke-width="3.5" fill="none" stroke-linecap="round" style="display:none"/>
-      <path id="mouth-sad" d="M85 145 Q100 133 115 145" stroke="#6b2545" stroke-width="3.5" fill="none" stroke-linecap="round" style="display:none"/>
-      <path d="M60 60 q40 -22 80 0" stroke="#fff" stroke-width="4" fill="none" opacity="0.35" stroke-linecap="round"/>
-    </svg>
+    <img id="mascot-photo" src="mascot.png" alt="us">
   </div>
 
   <header>
@@ -448,7 +412,7 @@
     </div>
 
     <div class="question">
-      <label><span class="qnum">2</span>Is there anything you want to talk to me about?</label>
+      <label><span class="qnum">2</span>Do you think we had good connections throught out the week?</label>
       <textarea id="q2" placeholder="I'm listening..."></textarea>
     </div>
 
@@ -490,11 +454,11 @@
       <textarea id="improve" placeholder="Next week I want to..."></textarea>
     </div>
 
-    <div class="photo-section-title">📸 moments from this week</div>
+    <div class="photo-section-title">📸 moments from this week (tap a box to add/change a photo)</div>
     <div class="photo-row" id="photo-row">
-      <div class="photo-box"><img src="photo1.jpg" alt="" onerror="this.closest('.photo-box').style.display='none'"></div>
-      <div class="photo-box"><img src="photo2.jpg" alt="" onerror="this.closest('.photo-box').style.display='none'"></div>
-      <div class="photo-box"><img src="photo3.jpg" alt="" onerror="this.closest('.photo-box').style.display='none'"></div>
+      <div class="photo-box" data-slot="photo1"><span class="photo-plus">+</span><input type="file" accept="image/*"><div class="uploading-label">saving...</div></div>
+      <div class="photo-box" data-slot="photo2"><span class="photo-plus">+</span><input type="file" accept="image/*"><div class="uploading-label">saving...</div></div>
+      <div class="photo-box" data-slot="photo3"><span class="photo-plus">+</span><input type="file" accept="image/*"><div class="uploading-label">saving...</div></div>
     </div>
 
     <button class="submit-btn" id="submit-btn">Send to Aayush 💌</button>
@@ -502,63 +466,51 @@
 
   <div class="history-toggle" id="history-toggle">🩷 Past check-ins</div>
   <div class="history-list" id="history-list"></div>
-  <button class="clear-history" id="clear-history">clear my past answers</button>
+  <button class="logout-link" id="logout-link">log out</button>
 </div>
+</div><!-- /#main-content -->
 
 <div class="overlay" id="overlay">
-  <svg width="120" height="120" viewBox="0 0 200 200">
-    <ellipse cx="45" cy="95" rx="32" ry="38" fill="#ffc2dd"/>
-    <ellipse cx="155" cy="95" rx="32" ry="38" fill="#ffc2dd"/>
-    <ellipse cx="100" cy="105" rx="62" ry="56" fill="#ff9dc4"/>
-    <circle cx="72" cy="120" r="14" fill="#ff6fa5" opacity="0.7"/>
-    <circle cx="128" cy="120" r="14" fill="#ff6fa5" opacity="0.7"/>
-    <path d="M80 92 Q84 86 88 92" stroke="#6b2545" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-    <path d="M112 92 Q116 86 120 92" stroke="#6b2545" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-    <path d="M95 130 Q100 145 95 158 Q90 165 98 168" stroke="#ff6fa5" stroke-width="10" fill="none" stroke-linecap="round"/>
-    <path d="M85 138 Q100 152 115 138" stroke="#6b2545" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  </svg>
+  <img src="mascot.png" alt="us" style="width:120px; height:120px; border-radius:50%; object-fit:cover; border:4px solid #fff; box-shadow: 0 6px 16px rgba(214,51,108,0.3);">
   <h2>Sent with love 🩷</h2>
-  <p>Your check-in is on its way to Aayush. He can't wait to read it 🩷</p>
+  <p>Your check-in is saved and on its way to Aayush. He can't wait to read it 🩷</p>
   <button id="overlay-close">Close</button>
 </div>
 
-</div><!-- /#main-content -->
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
 
 <script>
-  // ---------- passcode lock ----------
-  const PASSCODE = '012626';
-  const LOCK_KEY = 'rateMyAayush_unlocked';
+  // ============ PASTE YOUR FIREBASE CONFIG HERE ============
+ // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-  const lockScreen = document.getElementById('lock-screen');
-  const mainContent = document.getElementById('main-content');
-  const lockInput = document.getElementById('lock-input');
-  const lockSubmit = document.getElementById('lock-submit');
-  const lockError = document.getElementById('lock-error');
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDqMixXiRPeb5uslxoLl7TSMnZxVik8QTE",
+  authDomain: "rate-my-aayush.firebaseapp.com",
+  projectId: "rate-my-aayush",
+  storageBucket: "rate-my-aayush.firebasestorage.app",
+  messagingSenderId: "497594194520",
+  appId: "1:497594194520:web:a9a7936ec2492a252dc82d",
+  measurementId: "G-3XKK9TNWJP"
+};
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+  // ===========================================================
 
-  function unlock() {
-    lockScreen.classList.add('hidden');
-    mainContent.classList.add('unlocked');
-    try { sessionStorage.setItem(LOCK_KEY, 'true'); } catch (e) {}
-  }
-
-  function tryUnlock() {
-    if (lockInput.value === PASSCODE) {
-      unlock();
-    } else {
-      lockError.textContent = 'That\'s not quite it — try again';
-      lockInput.value = '';
-      lockInput.focus();
-    }
-  }
-
-  lockSubmit.addEventListener('click', tryUnlock);
-  lockInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') tryUnlock();
-  });
-
-  try {
-    if (sessionStorage.getItem(LOCK_KEY) === 'true') unlock();
-  } catch (e) {}
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  const storage = firebase.storage();
 
   const AAYUSH_EMAIL = 'aayushnepal2021@gmail.com';
 
@@ -574,6 +526,51 @@
     document.body.appendChild(c);
   }
 
+  // ---------- login ----------
+  const loginScreen = document.getElementById('login-screen');
+  const mainContent = document.getElementById('main-content');
+  const loginForm = document.getElementById('login-form');
+  const loginError = document.getElementById('login-error');
+
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    loginError.textContent = '';
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    auth.signInWithEmailAndPassword(email, password).catch((err) => {
+      console.error('Firebase auth error:', err.code, err.message);
+      let msg = err.message;
+      if (err.code === 'auth/unauthorized-domain') {
+        msg = 'This website\'s domain isn\'t authorized in Firebase yet (Authentication → Settings → Authorized domains).';
+      } else if (err.code === 'auth/invalid-api-key' || err.code === 'auth/api-key-not-valid') {
+        msg = 'The Firebase config in this page looks incomplete — check the firebaseConfig values.';
+      } else if (err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') {
+        msg = 'No account found with that email — check it was added in Firebase Authentication → Users.';
+      } else if (err.code === 'auth/wrong-password') {
+        msg = 'That password isn\'t right — try again.';
+      } else if (err.code === 'auth/operation-not-allowed') {
+        msg = 'Email/Password sign-in isn\'t enabled in Firebase yet.';
+      }
+      loginError.textContent = msg + ' (' + err.code + ')';
+    });
+  });
+
+  document.getElementById('logout-link').addEventListener('click', () => {
+    auth.signOut();
+  });
+
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      loginScreen.classList.add('hidden');
+      mainContent.classList.add('unlocked');
+      loadPhotos();
+      renderHistory();
+    } else {
+      loginScreen.classList.remove('hidden');
+      mainContent.classList.remove('unlocked');
+    }
+  });
+
   // ---------- love heart meter ----------
   const loveSlider = document.getElementById('love');
   const heartFillRect = document.getElementById('heart-fill-rect');
@@ -583,7 +580,7 @@
     const y = 90 - (v / 100) * 90;
     heartFillRect.setAttribute('y', y);
     let label = 'a little 🩷';
-    if (v >= 95) label = 'infinitely 🩷';
+    if (v >= 95) label = 'infinity 🩷';
     else if (v >= 75) label = 'so much 🩷';
     else if (v >= 45) label = 'a lot 🩷';
     else if (v >= 20) label = 'kinda 🩷';
@@ -592,40 +589,85 @@
   loveSlider.addEventListener('input', updateHeart);
   updateHeart();
 
-  // ---------- week rating -> mascot mood ----------
+  // ---------- week rating number display ----------
   const weekSlider = document.getElementById('week-rating');
   const weekNum = document.getElementById('week-num');
-  const mouths = {
-    happy: document.getElementById('mouth-happy'),
-    neutral: document.getElementById('mouth-neutral'),
-    sad: document.getElementById('mouth-sad')
-  };
-  function updateMood() {
-    const v = parseInt(weekSlider.value, 10);
-    weekNum.textContent = v;
-    mouths.happy.style.display = 'none';
-    mouths.neutral.style.display = 'none';
-    mouths.sad.style.display = 'none';
-    if (v >= 7) mouths.happy.style.display = 'block';
-    else if (v >= 4) mouths.neutral.style.display = 'block';
-    else mouths.sad.style.display = 'block';
+  function updateWeekNum() {
+    weekNum.textContent = weekSlider.value;
   }
-  weekSlider.addEventListener('input', updateMood);
-  updateMood();
+  weekSlider.addEventListener('input', updateWeekNum);
+  updateWeekNum();
 
-  // ---------- history (localStorage) ----------
-  const HISTORY_KEY = 'rateMyAayush_history';
-
-  function getHistory() {
-    try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; }
-    catch (e) { return []; }
-  }
-
-  function saveHistory(list) {
-    try { localStorage.setItem(HISTORY_KEY, JSON.stringify(list)); }
-    catch (e) { console.error('Could not save history:', e); }
+  // ---------- photos (Firebase Storage) ----------
+  function loadPhotos() {
+    document.querySelectorAll('.photo-box').forEach((box) => {
+      const slot = box.dataset.slot;
+      const ref = storage.ref().child(`photos/${slot}.jpg`);
+      ref.getDownloadURL().then((url) => {
+        let img = box.querySelector('img');
+        if (!img) {
+          img = document.createElement('img');
+          box.insertBefore(img, box.firstChild);
+        }
+        img.src = url;
+        box.querySelector('.photo-plus').style.display = 'none';
+      }).catch(() => {
+        // no photo uploaded yet for this slot — leave the + showing
+      });
+    });
   }
 
+  function compressImage(file) {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const maxDim = 700;
+          let w = img.width, h = img.height;
+          if (w > h && w > maxDim) { h = h * (maxDim / w); w = maxDim; }
+          else if (h > maxDim) { w = w * (maxDim / h); h = maxDim; }
+          const canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          canvas.toBlob((blob) => resolve(blob), 'image/jpeg', 0.8);
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  document.querySelectorAll('.photo-box').forEach((box) => {
+    const slot = box.dataset.slot;
+    const input = box.querySelector('input');
+
+    box.addEventListener('click', () => input.click());
+
+    input.addEventListener('change', async () => {
+      if (!input.files[0]) return;
+      box.classList.add('uploading');
+      try {
+        const blob = await compressImage(input.files[0]);
+        const ref = storage.ref().child(`photos/${slot}.jpg`);
+        await ref.put(blob, { contentType: 'image/jpeg' });
+        const url = await ref.getDownloadURL();
+        let img = box.querySelector('img');
+        if (!img) {
+          img = document.createElement('img');
+          box.insertBefore(img, box.firstChild);
+        }
+        img.src = url;
+        box.querySelector('.photo-plus').style.display = 'none';
+      } catch (err) {
+        alert('Could not upload that photo. Try again?');
+      }
+      box.classList.remove('uploading');
+      input.value = '';
+    });
+  });
+
+  // ---------- history (Firestore) ----------
   function escapeHtml(str) {
     if (!str) return '';
     const d = document.createElement('div');
@@ -634,29 +676,39 @@
   }
 
   function renderHistory() {
-    const list = getHistory();
     const container = document.getElementById('history-list');
-    container.innerHTML = '';
-    if (list.length === 0) {
-      container.innerHTML = '<div class="empty-history">No check-ins saved yet.</div>';
-      return;
-    }
-    list.slice().reverse().forEach((entry) => {
-      const div = document.createElement('div');
-      div.className = 'history-entry';
-      div.innerHTML = `
-        <div class="h-top"><span>${entry.date}</span><span>${entry.weekRating}/10 · loved ${entry.love}%</span></div>
-        <div class="h-detail">
-          <b>Wish you were there:</b> ${escapeHtml(entry.q1) || '—'}<br><br>
-          <b>Wanted to talk about:</b> ${escapeHtml(entry.q2) || '—'}<br><br>
-          <b>Feeling:</b> ${escapeHtml(entry.q3) || '—'}<br><br>
-          <b>Happy moment:</b> ${escapeHtml(entry.q4) || '—'}<br><br>
-          <b>Improve next week:</b> ${escapeHtml(entry.improve) || '—'}
-        </div>
-      `;
-      div.addEventListener('click', () => div.classList.toggle('open'));
-      container.appendChild(div);
-    });
+    container.innerHTML = '<div class="empty-history">Loading...</div>';
+    db.collection('checkins').orderBy('createdAt', 'desc').limit(50).get()
+      .then((snapshot) => {
+        container.innerHTML = '';
+        if (snapshot.empty) {
+          container.innerHTML = '<div class="empty-history">No check-ins saved yet.</div>';
+          return;
+        }
+        snapshot.forEach((doc) => {
+          const entry = doc.data();
+          const date = entry.createdAt && entry.createdAt.toDate
+            ? entry.createdAt.toDate().toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
+            : '';
+          const div = document.createElement('div');
+          div.className = 'history-entry';
+          div.innerHTML = `
+            <div class="h-top"><span>${date}</span><span>${entry.weekRating}/10 · loved ${entry.love}%</span></div>
+            <div class="h-detail">
+              <b>Wish you were there:</b> ${escapeHtml(entry.q1) || '—'}<br><br>
+              <b>Wanted to talk about:</b> ${escapeHtml(entry.q2) || '—'}<br><br>
+              <b>Feeling:</b> ${escapeHtml(entry.q3) || '—'}<br><br>
+              <b>Happy moment:</b> ${escapeHtml(entry.q4) || '—'}<br><br>
+              <b>Improve next week:</b> ${escapeHtml(entry.improve) || '—'}
+            </div>
+          `;
+          div.addEventListener('click', () => div.classList.toggle('open'));
+          container.appendChild(div);
+        });
+      })
+      .catch((err) => {
+        container.innerHTML = '<div class="empty-history">Could not load past check-ins.</div>';
+      });
   }
 
   document.getElementById('history-toggle').addEventListener('click', () => {
@@ -665,36 +717,12 @@
     if (list.classList.contains('open')) renderHistory();
   });
 
-  document.getElementById('clear-history').addEventListener('click', () => {
-    if (confirm('Clear all your saved check-ins? This cannot be undone.')) {
-      localStorage.removeItem(HISTORY_KEY);
-      renderHistory();
-    }
-  });
-
   // ---------- submit ----------
-  async function imgToFile(imgEl, filename) {
-    try {
-      const res = await fetch(imgEl.src);
-      const blob = await res.blob();
-      return new File([blob], filename, { type: blob.type || 'image/jpeg' });
-    } catch (e) {
-      return null;
-    }
-  }
-
-  function downloadFile(file) {
-    const url = URL.createObjectURL(file);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = file.name;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 2000);
-  }
-
   document.getElementById('submit-btn').addEventListener('click', async () => {
+    const submitBtn = document.getElementById('submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+
     const q1 = document.getElementById('q1').value.trim();
     const q2 = document.getElementById('q2').value.trim();
     const q3 = document.getElementById('q3').value.trim();
@@ -702,22 +730,23 @@
     const love = loveSlider.value;
     const weekRating = weekSlider.value;
     const improve = document.getElementById('improve').value.trim();
+    const submittedBy = auth.currentUser ? auth.currentUser.email : 'unknown';
 
-    const entry = {
-      date: new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }),
-      q1, q2, q3, q4, love, weekRating, improve
-    };
-
-    const history = getHistory();
-    history.push(entry);
-    saveHistory(history);
-    renderHistory();
-
-    const visiblePhotoEls = Array.from(document.querySelectorAll('.photo-box')).filter(box => box.style.display !== 'none').map(box => box.querySelector('img'));
-    const hasPhotos = visiblePhotoEls.length > 0;
+    try {
+      await db.collection('checkins').add({
+        q1, q2, q3, q4, love, weekRating, improve,
+        submittedBy,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    } catch (err) {
+      alert('Could not save this check-in. Check your connection and try again.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send to Aayush 💌';
+      return;
+    }
 
     const bodyLines = [
-      `Rate my Aayush — ${entry.date}`,
+      `Rate my Aayush — new check-in`,
       '',
       `1) One moment you wish I could've been there for:`,
       q1 || '(no answer)',
@@ -734,40 +763,28 @@
       `5) How much do you love me: ${love}%`,
       '',
       `6) Week rating: ${weekRating}/10`,
-      `Improve next week: ${improve || '(no answer)'}`
+      `Improve next week: ${improve || '(no answer)'}`,
+      '',
+      `(full check-in with photos is saved on the site)`
     ];
     const bodyText = bodyLines.join('\n');
-    const subject = `Weekly check-in — ${entry.date}`;
+    const subject = `Weekly check-in`;
     const mailto = `mailto:${AAYUSH_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
 
-    let files = [];
-    if (hasPhotos) {
-      const conversions = visiblePhotoEls.map((img, i) => imgToFile(img, `moment-${i + 1}.jpg`));
-      files = (await Promise.all(conversions)).filter(Boolean);
-    }
-
     document.getElementById('overlay').classList.add('show');
+    renderHistory();
 
-    if (files.length > 0 && navigator.canShare && navigator.canShare({ files })) {
-      try {
-        await navigator.share({ title: subject, text: bodyText, files });
-        return;
-      } catch (err) {
-        // fall through to backup below
-      }
-    }
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send to Aayush 💌';
 
-    if (files.length > 0) {
-      files.forEach(downloadFile);
+    if (submittedBy !== AAYUSH_EMAIL) {
+      window.location.href = mailto;
     }
-    window.location.href = mailto;
   });
 
   document.getElementById('overlay-close').addEventListener('click', () => {
     document.getElementById('overlay').classList.remove('show');
   });
-
-  renderHistory();
 </script>
 
 </body>
