@@ -407,12 +407,12 @@
 
   <div class="card">
     <div class="question">
-      <label><span class="qnum">1</span>What's one moment this week you wish I could've been there for?</label>
-      <textarea id="q1" placeholder="Tell me about it..."></textarea>
+      <label><span class="qnum">1</span>Honey tell me about everything you are going throguh.</label>
+      <textarea id="q1" placeholder="I will always be here..."></textarea>
     </div>
 
     <div class="question">
-      <label><span class="qnum">2</span>Is there anything you want to talk to me about?</label>
+      <label><span class="qnum">2</span>Is there anything you want to talk to me about in our relationship?</label>
       <textarea id="q2" placeholder="I'm listening..."></textarea>
     </div>
 
@@ -425,7 +425,8 @@
       <label><span class="qnum">4</span>What's a moment that made you happy this week?</label>
       <textarea id="q4" placeholder="A good moment..."></textarea>
     </div>
-
+    
+    
     <div class="question">
       <label><span class="qnum">5</span>How much do you love me?! 🥹</label>
       <div class="heart-meter">
@@ -452,13 +453,6 @@
         <div id="week-num">7</div>
       </div>
       <textarea id="improve" placeholder="Next week I want to..."></textarea>
-    </div>
-
-    <div class="photo-section-title">📸 moments from this week (tap a box to add/change a photo)</div>
-    <div class="photo-row" id="photo-row">
-      <div class="photo-box" data-slot="photo1"><span class="photo-plus">+</span><input type="file" accept="image/*"><div class="uploading-label">saving...</div></div>
-      <div class="photo-box" data-slot="photo2"><span class="photo-plus">+</span><input type="file" accept="image/*"><div class="uploading-label">saving...</div></div>
-      <div class="photo-box" data-slot="photo3"><span class="photo-plus">+</span><input type="file" accept="image/*"><div class="uploading-label">saving...</div></div>
     </div>
 
     <button class="submit-btn" id="submit-btn">Send to Aayush 💌</button>
@@ -568,7 +562,7 @@
     const y = 90 - (v / 100) * 90;
     heartFillRect.setAttribute('y', y);
     let label = 'a little 🩷';
-    if (v >= 95) label = 'infinitely 🩷';
+    if (v >= 95) label = 'infinty 🩷';
     else if (v >= 75) label = 'so much 🩷';
     else if (v >= 45) label = 'a lot 🩷';
     else if (v >= 20) label = 'kinda 🩷';
